@@ -1,0 +1,25 @@
+{
+  "name": "desafio-brain-ag",
+  "version": "1.0.0",
+  "description": "Desafio feito para uma solução de cadastro de um produtor rural com desenvolvimento feitos em Node.js com Postgres",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bsmith789/desafio-brain-ag.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bsmith789/desafio-brain-ag/issues"
+  },
+  "homepage": "https://github.com/Bsmith789/desafio-brain-ag#readme",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "express": "^4.18.1",
+    "pg": "^8.7.3"
+  }
+}
