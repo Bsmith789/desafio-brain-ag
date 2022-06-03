@@ -1,6 +1,6 @@
 const { Client } = require('pg');
 
-const produtor = new Client({
+const client = new Client({
     host:"localhost",
     user:"postgres",
     port:5432,
@@ -8,4 +8,4 @@ const produtor = new Client({
     database:"postgres"
 })
 
-module.exports = produtor
+module.exports = client

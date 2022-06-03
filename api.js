@@ -1,4 +1,4 @@
-const produtor = require('./conexao');
+const client = require('./conexao.js');
 const express = require('express');
 
 const app = express();
@@ -7,31 +7,31 @@ app.listen(3300, () => {
     console.log('Server está rodando na porta 3300');
 })
 
-produtor.connect();
+client.connect();
 
-app.get('/Produtores', (req, res) => {
-    produtor.query('Select * from Produtores', (err, result) => {
+app.get('/users', (req, res) => {
+    client.query('Select * from users', (err, result) => {
         if (!err) {
             res.send(result.rows);
         }
     });
-    produtor.end();
+    client.end();
 })
 
-app.get('/Produtores/:id', (req, res) => {
-    produtor.query(`Select * from Produtores where id=${req.params.id}`, (err, result) => {
+app.get('/users/:id', (req, res) => {
+    client.query(`Select * from users where id=${req.params.id}`, (err, result) => {
         if (!err) {
             res.send(result.rows);
         }
     });
-    produtor.end();
+    client.end();
 })
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 
 
-app.post('/Produtores', (req, res) => {
+app.post('/users', (req, res) => {
     const user = req.body;
     const cpfValido = user.cpf.lenght == 11;
     const cnpjValido = user.cpf.lenght == 14;
@@ -62,20 +62,20 @@ app.post('/Produtores', (req, res) => {
     if (existemErros) {
         res.status(400).json(erros);
     } else {
-        let insertQuery = `insert into Produtores(id,cpf,cnpj,nome,nomeFazenda,cidade,estado,areaTotal,areaAgric,areaVeget,culturas)
+        let insertQuery = `insert into users(id,cpf,cnpj,nome,nomeFazenda,cidade,estado,areaTotal,areaAgric,areaVeget,culturas)
                                    values(${user.id},${user.cpf},${user.cnpj},'${user.nome}','${user.nomeFazenda}','${user.cidade}','${user.estado}',${user.areaTotal},${user.areaAgric},${user.areaVeget},'{${user.culturas}}')`
-        produtor.query(insertQuery, (err, result) => {
+        client.query(insertQuery, (err, result) => {
             if (!err) {
-                res.send('Novo produtor adicionado com sucesso!');
+                res.send('Novo client adicionado com sucesso!');
             } else {
                 console.log(err.message)
             }
         })
-        produtor.end();
+        client.end();
     }
 })
 
-app.put('/Produtores/:id', (req, res) => {
+app.put('/users/:id', (req, res) => {
     let user = req.body;
     let updateQuery = `update users
                        set cpf = ${user.cpf},
@@ -90,17 +90,17 @@ app.put('/Produtores/:id', (req, res) => {
                        culturas = '{${user.culturas}}',
                        where id = ${user.id}`
 
-    produtor.query(updateQuery, (err, result) => {
+    client.query(updateQuery, (err, result) => {
         if (!err) {
             res.send('Atualização feita com sucesso!')
         } else {
             console.log(err.message)
         }
     })
-    produtor.end;
+    client.end;
 })
 
-app.delete('/Produtores/:id', (req, res) => {
+app.delete('/users/:id', (req, res) => {
     let insertQuery = `delete from users where id=${req.params.id}`
 
     client.query(insertQuery, (err, result) => {
